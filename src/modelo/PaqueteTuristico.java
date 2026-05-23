@@ -1,12 +1,14 @@
 package modelo;
 
 /**
- * Clase base de un paquete turistico.
+ * Clase abstracta del modelo. Representa un paquete turistico.
+ * Se usa herencia: PaqueteUnico y PaqueteMultiple.
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public abstract class PaqueteTuristico {
 
+    // Atributos comunes del paquete
     protected String codigo;
     protected String nombre;
     protected String tipologia;
@@ -18,12 +20,13 @@ public abstract class PaqueteTuristico {
     protected boolean alimentacion;
     protected boolean soloDesayuno;
     protected String descripcion;
-    protected boolean activo;
+    protected boolean activo; // true = activo, false = eliminado logicamente
 
     public PaqueteTuristico() {
         this.activo = true;
     }
 
+    // Metodos abstractos que implementan las subclases
     public abstract boolean esMultiple();
 
     public abstract String getDestinosCsv();
@@ -45,6 +48,7 @@ public abstract class PaqueteTuristico {
         return valor ? "Si" : "No";
     }
 
+    // Convierte el objeto a una linea del archivo paquetes.csv
     public String aLineaCsv() {
         return codigo + ";"
                 + (esMultiple() ? "Multiple" : "Unico") + ";"
@@ -62,6 +66,7 @@ public abstract class PaqueteTuristico {
                 + boolCsv(activo);
     }
 
+    // Crea un paquete a partir de una linea del CSV
     public static PaqueteTuristico desdeLineaCsv(String linea) {
         String[] c = linea.split(";", -1);
         if (c.length < 14) {

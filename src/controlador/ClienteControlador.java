@@ -6,7 +6,7 @@ import modelo.Cliente;
 import utilitarios.Archivo;
 
 /**
- * Controlador de clientes.
+ * Controlador MVC de clientes (buscar y guardar en CSV).
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
@@ -14,6 +14,7 @@ public class ClienteControlador {
 
     private static ArrayList<Cliente> clientes = new ArrayList<>();
 
+    // Carga clientes desde datos/clientes.csv
     public static void cargarDesdeArchivo() throws IOException {
         clientes.clear();
         ArrayList<String> lineas = Archivo.leerLineas(Archivo.RUTA_CLIENTES);
@@ -40,6 +41,7 @@ public class ClienteControlador {
         Archivo.escribirLineas(Archivo.RUTA_CLIENTES, lineas);
     }
 
+    // Busca por tipo y numero de identificacion
     public static Cliente buscar(String tipoId, String numeroId) throws IOException {
         cargarDesdeArchivo();
         for (Cliente cliente : clientes) {
@@ -51,6 +53,7 @@ public class ClienteControlador {
         return null;
     }
 
+    // Guarda o actualiza un cliente en el CSV
     public static String guardar(Cliente cliente) {
         String error = validarCliente(cliente);
         if (error != null) {

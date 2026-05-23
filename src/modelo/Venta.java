@@ -1,7 +1,8 @@
 package modelo;
 
 /**
- * Venta de un paquete turistico.
+ * Modelo de la venta. Guarda datos del cliente, paquete y totales.
+ * Persistencia en datos/ventas.csv
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
@@ -27,7 +28,10 @@ public class Venta {
         this.activo = true;
     }
 
-    // Calcula subtotal, recargo multiple, descuento y total
+    /**
+     * Calcula descuento y total de la venta.
+     * [0] = monto descuento, [1] = total a pagar (redondeados a 2 decimales)
+     */
     public static double[] calcularTotales(double tarifaDia, int dias, int unidades,
             double porcentajeDescuento, double porcentajeRecargo) {
         double subtotal = tarifaDia * dias * unidades;

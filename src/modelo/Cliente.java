@@ -1,7 +1,8 @@
 package modelo;
 
 /**
- * Cliente del sistema de ventas.
+ * Modelo del cliente que compra paquetes turisticos.
+ * Se guarda en datos/clientes.csv
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */

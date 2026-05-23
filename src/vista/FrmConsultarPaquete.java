@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.PaqueteTuristico;
 
 /**
+ * Vista: listado de paquetes activos, eliminar y registrar nuevo.
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
@@ -152,6 +153,7 @@ public class FrmConsultarPaquete extends javax.swing.JFrame {
         eliminarPaquete();
     }//GEN-LAST:event_btnEliminarjButtonGuardarVentaActionPerformed
 
+    // Llena la tabla con paquetes activos del controlador
     private void cargarTabla() {
         modeloTabla.setRowCount(0);
         try {
@@ -180,6 +182,7 @@ public class FrmConsultarPaquete extends javax.swing.JFrame {
         }
     }
 
+    // Eliminacion logica del paquete seleccionado
     private void eliminarPaquete() {
         int fila = tablaPaquetes.getSelectedRow();
         if (fila < 0) {

@@ -1,13 +1,13 @@
 package modelo;
 
 /**
- * Paquete con un solo destino.
+ * Paquete turistico con un solo destino (hereda de PaqueteTuristico).
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class PaqueteUnico extends PaqueteTuristico {
 
-    private String destino;
+    private String destino; // unico destino del viaje
 
     public PaqueteUnico() {
         super();

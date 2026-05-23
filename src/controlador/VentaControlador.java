@@ -10,7 +10,7 @@ import modelo.Venta;
 import utilitarios.Archivo;
 
 /**
- * Controlador de ventas.
+ * Controlador MVC de ventas: registrar, listar, cancelar y boleta.
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
@@ -18,6 +18,7 @@ public class VentaControlador {
 
     private static ArrayList<Venta> ventas = new ArrayList<>();
 
+    // Lee ventas desde datos/ventas.csv
     public static void cargarDesdeArchivo() throws IOException {
         ventas.clear();
         ArrayList<String> lineas = Archivo.leerLineas(Archivo.RUTA_VENTAS);
@@ -44,6 +45,7 @@ public class VentaControlador {
         Archivo.escribirLineas(Archivo.RUTA_VENTAS, lineas);
     }
 
+    // Guarda cliente y venta; genera codigo V1, V2...
     public static String registrar(Venta venta, Cliente cliente) {
         String errorCliente = ClienteControlador.guardar(cliente);
         if (errorCliente != null) {
@@ -100,6 +102,7 @@ public class VentaControlador {
         return null;
     }
 
+    // Filtra por estado ACTIVO/CANCELADO y opcionalmente por codigo
     public static ArrayList<Venta> buscarPorFiltro(boolean activo, String codigoVenta) throws IOException {
         cargarDesdeArchivo();
         ArrayList<Venta> resultado = new ArrayList<>();
@@ -117,6 +120,7 @@ public class VentaControlador {
         return resultado;
     }
 
+    // Cancelacion logica de la venta
     public static String cancelarVenta(String codigoVenta) {
         try {
             cargarDesdeArchivo();
@@ -144,6 +148,7 @@ public class VentaControlador {
         return null;
     }
 
+    // Arma el texto tipo boleta para el detalle de venta
     public static String obtenerTextoBoleta(Venta venta) throws IOException {
         Cliente cliente = ClienteControlador.buscar(venta.getTipoId(), venta.getNumeroId());
         PaqueteTuristico paquete = PaqueteControlador.buscarPorCodigoDesdeArchivo(venta.getCodigoPaquete());

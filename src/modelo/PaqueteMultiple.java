@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Paquete con varios destinos. Recargo del 1% en la venta.
+ * Paquete con varios destinos. Aplica 1% de recargo al vender.
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class PaqueteMultiple extends PaqueteTuristico {
 
-    private List<String> destinos;
+    private List<String> destinos; // lista de ciudades destino
 
     public PaqueteMultiple() {
         super();
@@ -22,6 +22,7 @@ public class PaqueteMultiple extends PaqueteTuristico {
         return true;
     }
 
+    // Recargo del 1% sobre el total de la venta
     @Override
     public double getPorcentajeRecargo() {
         return 1.0;

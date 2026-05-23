@@ -16,11 +16,13 @@ import modelo.PaqueteTuristico;
 import modelo.Venta;
 
 /**
+ * Vista: registro de venta (cliente, paquete, calculo de total).
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmRegistrarVenta extends javax.swing.JFrame {
 
+    // Paquete cargado con el boton Buscar
     private PaqueteTuristico paqueteSeleccionado;
 
     /**
@@ -600,6 +602,7 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
         return cbTipoId.getSelectedItem().toString().substring(0, 1);
     }
 
+    // Busca cliente por tipo y numero de ID
     private void buscarCliente() {
         String tipoId = obtenerTipoId();
         String numeroId = txtNumeroId.getText().trim();
@@ -640,6 +643,7 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
         }
     }
 
+    // Busca paquete activo por codigo
     private void buscarPaquete() {
         String codigo = txtCodigoPaquete.getText().trim();
         if (codigo.isEmpty()) {
@@ -704,6 +708,7 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
         chSoloDesayuno.setSelected(false);
     }
 
+    // Muestra descuento y total con 2 decimales
     private void actualizarTotalesEnPantalla() {
         if (paqueteSeleccionado == null) {
             lbDescuento.setText("Descuento: 0.00");
@@ -731,6 +736,7 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
         }
     }
 
+    // Guarda cliente y venta en los archivos CSV
     private void guardarVenta() {
         if (paqueteSeleccionado == null) {
             JOptionPane.showMessageDialog(this,

@@ -12,11 +12,13 @@ import modelo.PaqueteTuristico;
 import modelo.PaqueteUnico;
 
 /**
+ * Vista: formulario para registrar paquetes turisticos (Unico o Multiple).
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmRegistrarPaquete extends javax.swing.JFrame {
 
+    // Destinos agregados cuando la categoria es Multiple
     private ArrayList<String> destinosMultiples;
 
     /**
@@ -365,6 +367,7 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
         return cbCategoria.getSelectedItem().toString().equals("Múltiple");
     }
 
+    // Habilita o deshabilita controles segun Unico / Multiple
     private void configurarPorCategoria() {
         destinosMultiples.clear();
         if (esCategoriaMultiple()) {
@@ -417,6 +420,7 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
         txtDestinosSeleccionados.setText(texto);
     }
 
+    // Valida datos y llama al controlador para guardar en CSV
     private void guardarPaquete() {
         String codigo = txtCodigoPaquete.getText().trim();
         String nombre = txtNombrePaquete.getText().trim();

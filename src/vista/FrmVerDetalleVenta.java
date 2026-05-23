@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import modelo.Venta;
 
 /**
+ * Vista: muestra la boleta con datos del cliente, paquete y venta.
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
@@ -39,6 +40,7 @@ public class FrmVerDetalleVenta extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
+    // Texto solo lectura con fuente monoespaciada
     private void configurarAreaBoleta() {
         jTextArea1.setEditable(false);
         jTextArea1.setFont(new Font("Monospaced", Font.PLAIN, 12));

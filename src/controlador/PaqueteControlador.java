@@ -8,18 +8,21 @@ import modelo.PaqueteUnico;
 import utilitarios.Archivo;
 
 /**
- * Controlador del modulo de paquetes turisticos.
+ * Controlador MVC del modulo de paquetes.
+ * La vista llama aqui; esta clase usa el modelo y el CSV.
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class PaqueteControlador {
 
+    // Lista en memoria de todos los paquetes
     private static ArrayList<PaqueteTuristico> paquetes = new ArrayList<>();
 
     public static ArrayList<PaqueteTuristico> getPaquetes() {
         return paquetes;
     }
 
+    // Lee paquetes.csv y llena la lista
     public static void cargarDesdeArchivo() throws IOException {
         paquetes.clear();
         ArrayList<String> lineas = Archivo.leerLineas(Archivo.RUTA_PAQUETES);
@@ -38,6 +41,7 @@ public class PaqueteControlador {
         }
     }
 
+    // Escribe todos los paquetes al CSV
     public static void guardarEnArchivo() throws IOException {
         ArrayList<String> lineas = new ArrayList<>();
         for (PaqueteTuristico paquete : paquetes) {
@@ -55,6 +59,7 @@ public class PaqueteControlador {
         return false;
     }
 
+    // Registra un paquete nuevo (valida codigo unico)
     public static String registrar(PaqueteTuristico paquete) {
         String error = validarPaquete(paquete);
         if (error != null) {
@@ -97,6 +102,7 @@ public class PaqueteControlador {
         return buscarPorCodigo(codigo);
     }
 
+    // Devuelve solo paquetes con activo = true
     public static ArrayList<PaqueteTuristico> listarActivos() throws IOException {
         cargarDesdeArchivo();
         ArrayList<PaqueteTuristico> activos = new ArrayList<>();
@@ -108,6 +114,7 @@ public class PaqueteControlador {
         return activos;
     }
 
+    // Eliminacion logica: activo pasa a false
     public static String eliminarLogico(String codigo) {
         try {
             cargarDesdeArchivo();

@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Venta;
 
 /**
+ * Vista: listado de ventas con filtro, cancelar y ver boleta.
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
@@ -238,6 +239,7 @@ public class FrmConsultarVenta extends javax.swing.JFrame {
         cargarTabla();
     }//GEN-LAST:event_btnBuscarjButtonGuardarVentaActionPerformed
 
+    // Carga ventas segun estado y numero de venta
     private void cargarTabla() {
         modeloTabla.setRowCount(0);
         try {
@@ -266,6 +268,7 @@ public class FrmConsultarVenta extends javax.swing.JFrame {
         }
     }
 
+    // Pasa la venta a estado CANCELADO
     private void cancelarVentaSeleccionada() {
         int fila = tablaVenta.getSelectedRow();
         if (fila < 0) {
@@ -302,6 +305,7 @@ public class FrmConsultarVenta extends javax.swing.JFrame {
         cargarTabla();
     }
 
+    // Abre la boleta de la venta seleccionada
     private void verDetalleVenta() {
         int fila = tablaVenta.getSelectedRow();
         if (fila < 0) {

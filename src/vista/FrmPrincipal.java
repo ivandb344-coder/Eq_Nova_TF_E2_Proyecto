@@ -11,11 +11,14 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
+ * Ventana principal del sistema (VISTA).
+ * Menu para abrir modulos de paquetes, ventas y carga/guardado de datos.
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
+    // Referencias a los formularios hijos
     FrmConsultarPaquete frmConsultarPaquete;
     FrmRegistrarPaquete frmRegistrarPaquete;
     FrmConsultarVenta frmConsultarVenta;
@@ -184,6 +187,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frmConsultarVenta.setVisible(true);
     }//GEN-LAST:event_MenuConsultarVentaActionPerformed
 
+    // Menu Archivo: carga los CSV a memoria
     private void menuCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCargarDatosActionPerformed
         try {
             PaqueteControlador.cargarDesdeArchivo();
@@ -201,6 +205,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuCargarDatosActionPerformed
 
+    // Menu Archivo: guarda la memoria en los CSV
     private void menuGuardarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarDatosActionPerformed
         try {
             PaqueteControlador.guardarEnArchivo();
