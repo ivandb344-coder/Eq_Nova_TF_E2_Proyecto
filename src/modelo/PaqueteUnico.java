@@ -30,4 +30,12 @@ public class PaqueteUnico extends PaqueteTuristico {
     public void setDestino(String destino) {
         this.destino = destino;
     }
+
+    @Override
+    public String toString() {
+        return "PaqueteUnico{" 
+                + "destino=" + destino 
+                + '}';
+    }
+    
 }

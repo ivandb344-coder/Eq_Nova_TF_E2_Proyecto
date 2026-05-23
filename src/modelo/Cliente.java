@@ -100,7 +100,23 @@ public class Cliente {
 
     public String getEmpresaTexto() {
         return empresa ? "SI" : "NO";
+        
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" 
+                + "tipoId=" + tipoId 
+                + ", numeroId=" + numeroId 
+                + ", nombre=" + nombre 
+                + ", email=" + email 
+                + ", telefono=" + telefono 
+                + ", nombreContacto=" + nombreContacto 
+                + ", empresa=" + empresa 
+                + '}';
+    }
+    
+    
 
     // Valida numero de ID segun tipo: C=6 digitos, N=9 digitos
     public static String validarNumeroId(String tipoId, String numeroId) {

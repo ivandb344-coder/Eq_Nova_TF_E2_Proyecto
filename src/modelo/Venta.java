@@ -214,4 +214,26 @@ public class Venta {
     public String getEstadoTexto() {
         return activo ? "ACTIVO" : "CANCELADO";
     }
+
+    @Override
+    public String toString() {
+        return "Venta{"
+                + "codigoVenta=" + codigoVenta 
+                + ", tipoId=" + tipoId 
+                + ", numeroId=" + numeroId 
+                + ", nombreCliente=" + nombreCliente 
+                + ", codigoPaquete=" + codigoPaquete 
+                + ", nombrePaquete=" + nombrePaquete 
+                + ", origen=" + origen 
+                + ", destino=" + destino 
+                + ", tarifaDia=" + tarifaDia 
+                + ", diasPermanencia=" + diasPermanencia 
+                + ", unidades=" + unidades 
+                + ", porcentajeDescuento=" + porcentajeDescuento 
+                + ", montoDescuento=" + montoDescuento 
+                + ", total=" + total 
+                + ", activo=" + activo 
+                + '}';
+    }
+    
 }

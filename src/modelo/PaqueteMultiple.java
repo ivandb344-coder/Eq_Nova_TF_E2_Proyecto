@@ -83,4 +83,12 @@ public class PaqueteMultiple extends PaqueteTuristico {
         }
         return texto;
     }
+
+    @Override
+    public String toString() {
+        return "PaqueteMultiple{"
+                + "destinos=" + destinos 
+                + '}';
+    }
+    
 }

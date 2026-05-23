@@ -203,4 +203,23 @@ public abstract class PaqueteTuristico {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    @Override
+    public String toString() {
+        return "PaqueteTuristico{" 
+                + "codigo=" + codigo 
+                + ", nombre=" + nombre 
+                + ", tipologia=" + tipologia 
+                + ", tarifaDia=" + tarifaDia 
+                + ", origen=" + origen 
+                + ", vuelo=" + vuelo 
+                + ", hotel=" + hotel 
+                + ", asistenciaMedica=" + asistenciaMedica 
+                + ", alimentacion=" + alimentacion 
+                + ", soloDesayuno=" + soloDesayuno 
+                + ", descripcion=" + descripcion 
+                + ", activo=" + activo 
+                + '}';
+    }
+    
 }
