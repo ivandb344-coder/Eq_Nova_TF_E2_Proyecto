@@ -255,8 +255,8 @@ public class VentaControlador {
         if (venta.getUnidades() <= 0) {
             return "Las unidades deben ser mayores a 0.";
         }
-        if (venta.getPorcentajeDescuento() < 0 || venta.getPorcentajeDescuento() > 100) {
-            return "El descuento debe estar entre 0 y 100.";
+        if (venta.getPorcentajeDescuento() < 0 || venta.getPorcentajeDescuento() > 70) {
+            return "El descuento debe estar entre 0 y 70.";
         }
         return null;
     }
