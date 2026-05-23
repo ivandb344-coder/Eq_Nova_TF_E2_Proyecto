@@ -615,6 +615,15 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
             return;
         }
 
+        String errorNumero = Cliente.validarNumeroId(tipoId, numeroId);
+        if (errorNumero != null) {
+            JOptionPane.showMessageDialog(this,
+                    errorNumero,
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         try {
             Cliente cliente = ClienteControlador.buscar(tipoId, numeroId);
             if (cliente == null) {
