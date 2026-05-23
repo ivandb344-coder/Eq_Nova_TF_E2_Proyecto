@@ -27,6 +27,7 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
         destinosMultiples = new ArrayList<>();
         txtDestinosSeleccionados.setEditable(false);
         configurarPorCategoria();
+        setLocationRelativeTo(null);
     }
 
     /**

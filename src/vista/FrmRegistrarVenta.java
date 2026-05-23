@@ -32,6 +32,7 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
         txtDescripcion.setEditable(false);
         configurarCalculoTotales();
         actualizarTotalesEnPantalla();
+        setLocationRelativeTo(null);
     }
 
     private void configurarCalculoTotales() {

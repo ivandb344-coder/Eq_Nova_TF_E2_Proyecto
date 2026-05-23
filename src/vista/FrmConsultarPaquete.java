@@ -28,6 +28,7 @@ public class FrmConsultarPaquete extends javax.swing.JFrame {
         initComponents();
         modeloTabla = (DefaultTableModel) tablaPaquetes.getModel();
         cargarTabla();
+        setLocationRelativeTo(null);
     }
 
     /**

@@ -28,6 +28,7 @@ public class FrmConsultarVenta extends javax.swing.JFrame {
         initComponents();
         modeloTabla = (DefaultTableModel) tablaVenta.getModel();
         cargarTabla();
+        setLocationRelativeTo(null);
     }
 
     /**

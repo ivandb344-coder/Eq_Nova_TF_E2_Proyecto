@@ -22,6 +22,7 @@ public class FrmVerDetalleVenta extends javax.swing.JFrame {
     public FrmVerDetalleVenta() {
         initComponents();
         configurarAreaBoleta();
+        setLocationRelativeTo(null);
     }
 
     public FrmVerDetalleVenta(Venta venta) {
@@ -35,6 +36,7 @@ public class FrmVerDetalleVenta extends javax.swing.JFrame {
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+        setLocationRelativeTo(null);
     }
 
     private void configurarAreaBoleta() {
