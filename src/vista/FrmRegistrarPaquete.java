@@ -4,17 +4,29 @@
  */
 package vista;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import controlador.PaqueteControlador;
+import modelo.PaqueteMultiple;
+import modelo.PaqueteTuristico;
+import modelo.PaqueteUnico;
+
 /**
  *
  * @author elden
  */
 public class FrmRegistrarPaquete extends javax.swing.JFrame {
 
+    private ArrayList<String> destinosMultiples;
+
     /**
      * Creates new form FrmCrearPaquete
      */
     public FrmRegistrarPaquete() {
         initComponents();
+        destinosMultiples = new ArrayList<>();
+        txtDestinosSeleccionados.setEditable(false);
+        configurarPorCategoria();
     }
 
     /**
@@ -204,24 +216,23 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, REGISTRODEVENTA2Layout.createSequentialGroup()
                                         .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(160, 160, 160))))
-                            .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
-                                    .addComponent(chVuelo)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(chHotel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(chAsistenciaMedica)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(chAlimentación)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(chSoloDesayuno))
-                                .addComponent(cbOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNombrePaquete, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
-                                    .addComponent(cbDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(btnAgregarDestino))
-                                .addComponent(jScrollPane2))))
+                            .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
+                                .addComponent(chVuelo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chHotel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chAsistenciaMedica)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chAlimentación)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chSoloDesayuno))
+                            .addComponent(cbOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombrePaquete, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
+                                .addComponent(cbDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAgregarDestino))
+                            .addComponent(jScrollPane2)))
                     .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
                         .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
@@ -234,19 +245,17 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
                                 .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel47))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(90, 90, 90)
+                .addGap(18, 18, 18)
                 .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
-                        .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
-                        .addGap(18, 18, 18))
-                    .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 6, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, REGISTRODEVENTA2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar)
+                .addGap(18, 18, 18)
+                .addComponent(btnLimpiar)
+                .addContainerGap())
         );
         REGISTRODEVENTA2Layout.setVerticalGroup(
             REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,8 +293,8 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
                     .addComponent(jLabel53)
                     .addComponent(btnAgregarDestino))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chVuelo)
                     .addComponent(chHotel)
@@ -303,18 +312,18 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(REGISTRODEVENTA2, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE)
+            .addComponent(REGISTRODEVENTA2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(REGISTRODEVENTA2, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+            .addComponent(REGISTRODEVENTA2, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbCategoriajComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriajComboBoxCategoriaActionPerformed
-
+        configurarPorCategoria();
     }//GEN-LAST:event_cbCategoriajComboBoxCategoriaActionPerformed
 
     private void txtNombrePaquetejTextFieldNombrePaqueteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePaquetejTextFieldNombrePaqueteActionPerformed
@@ -322,8 +331,7 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombrePaquetejTextFieldNombrePaqueteActionPerformed
 
     private void btnLimpiarjButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarjButtonLimpiarActionPerformed
-        
-
+        limpiarFormulario();
     }//GEN-LAST:event_btnLimpiarjButtonLimpiarActionPerformed
 
     private void chHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chHotelActionPerformed
@@ -335,7 +343,7 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
     }//GEN-LAST:event_chAlimentaciónActionPerformed
 
     private void btnGuardarjButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarjButtonGuardarVentaActionPerformed
-        
+        guardarPaquete();
     }//GEN-LAST:event_btnGuardarjButtonGuardarVentaActionPerformed
 
     private void cbOrigenjComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbOrigenjComboBoxCategoriaActionPerformed
@@ -343,12 +351,178 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
     }//GEN-LAST:event_cbOrigenjComboBoxCategoriaActionPerformed
 
     private void cbDestinojComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDestinojComboBoxCategoriaActionPerformed
-        // TODO add your handling code here:
+        if (!esCategoriaMultiple()) {
+            mostrarDestinoUnico();
+        }
     }//GEN-LAST:event_cbDestinojComboBoxCategoriaActionPerformed
 
     private void btnAgregarDestinojButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDestinojButtonGuardarVentaActionPerformed
-        // TODO add your handling code here:
+        agregarDestinoMultiple();
     }//GEN-LAST:event_btnAgregarDestinojButtonGuardarVentaActionPerformed
+
+    private boolean esCategoriaMultiple() {
+        return cbCategoria.getSelectedItem().toString().equals("Múltiple");
+    }
+
+    private void configurarPorCategoria() {
+        destinosMultiples.clear();
+        if (esCategoriaMultiple()) {
+            btnAgregarDestino.setEnabled(true);
+            cbDestino.setEnabled(true);
+            txtDestinosSeleccionados.setText("");
+        } else {
+            btnAgregarDestino.setEnabled(false);
+            cbDestino.setEnabled(true);
+            mostrarDestinoUnico();
+        }
+    }
+
+    private void mostrarDestinoUnico() {
+        String destino = cbDestino.getSelectedItem().toString();
+        txtDestinosSeleccionados.setText(destino);
+    }
+
+    private void agregarDestinoMultiple() {
+        String destino = cbDestino.getSelectedItem().toString();
+        String origen = cbOrigen.getSelectedItem().toString();
+
+        if (destino.equalsIgnoreCase(origen)) {
+            JOptionPane.showMessageDialog(this,
+                    "El destino no puede ser igual al origen.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (destinosMultiples.contains(destino)) {
+            JOptionPane.showMessageDialog(this,
+                    "Ese destino ya fue agregado.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        destinosMultiples.add(destino);
+        actualizarTextoDestinos();
+    }
+
+    private void actualizarTextoDestinos() {
+        String texto = "";
+        for (int i = 0; i < destinosMultiples.size(); i++) {
+            if (i > 0) {
+                texto = texto + "\n";
+            }
+            texto = texto + destinosMultiples.get(i);
+        }
+        txtDestinosSeleccionados.setText(texto);
+    }
+
+    private void guardarPaquete() {
+        String codigo = txtCodigoPaquete.getText().trim();
+        String nombre = txtNombrePaquete.getText().trim();
+        String tipologia = txtTipologia.getText().trim();
+        String tarifaTexto = txtTarifaDia.getText().trim();
+        String origen = cbOrigen.getSelectedItem().toString();
+        String descripcion = txtDescripcion.getText().trim();
+
+        if (codigo.isEmpty() || nombre.isEmpty() || tipologia.isEmpty() || tarifaTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Complete todos los campos obligatorios.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        double tarifaDia;
+        try {
+            tarifaDia = Double.parseDouble(tarifaTexto);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "La tarifa por dia debe ser un numero valido.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (tarifaDia < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "La tarifa por dia debe ser mayor o igual a 0.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        PaqueteTuristico paquete;
+
+        if (esCategoriaMultiple()) {
+            if (destinosMultiples.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Debe agregar al menos un destino.",
+                        "Validacion",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            PaqueteMultiple multiple = new PaqueteMultiple();
+            multiple.setDestinos(destinosMultiples);
+            paquete = multiple;
+        } else {
+            String destino = cbDestino.getSelectedItem().toString();
+            if (origen.equalsIgnoreCase(destino)) {
+                JOptionPane.showMessageDialog(this,
+                        "El origen y el destino no pueden ser iguales.",
+                        "Validacion",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            PaqueteUnico unico = new PaqueteUnico();
+            unico.setDestino(destino);
+            paquete = unico;
+        }
+
+        paquete.setCodigo(codigo);
+        paquete.setNombre(nombre);
+        paquete.setTipologia(tipologia);
+        paquete.setTarifaDia(tarifaDia);
+        paquete.setOrigen(origen);
+        paquete.setVuelo(chVuelo.isSelected());
+        paquete.setHotel(chHotel.isSelected());
+        paquete.setAsistenciaMedica(chAsistenciaMedica.isSelected());
+        paquete.setAlimentacion(chAlimentación.isSelected());
+        paquete.setSoloDesayuno(chSoloDesayuno.isSelected());
+        paquete.setDescripcion(descripcion);
+        paquete.setActivo(true);
+
+        String error = PaqueteControlador.registrar(paquete);
+        if (error != null) {
+            JOptionPane.showMessageDialog(this,
+                    error,
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this,
+                "Paquete registrado correctamente.",
+                "Informacion",
+                JOptionPane.INFORMATION_MESSAGE);
+        limpiarFormulario();
+    }
+
+    private void limpiarFormulario() {
+        txtCodigoPaquete.setText("");
+        cbCategoria.setSelectedIndex(0);
+        txtNombrePaquete.setText("");
+        txtTipologia.setText("");
+        txtTarifaDia.setText("");
+        cbOrigen.setSelectedIndex(0);
+        cbDestino.setSelectedIndex(0);
+        chVuelo.setSelected(false);
+        chHotel.setSelected(false);
+        chAsistenciaMedica.setSelected(false);
+        chAlimentación.setSelected(false);
+        chSoloDesayuno.setSelected(false);
+        txtDescripcion.setText("");
+        destinosMultiples.clear();
+        configurarPorCategoria();
+    }
 
     /**
      * @param args the command line arguments

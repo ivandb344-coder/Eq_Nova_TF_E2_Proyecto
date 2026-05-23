@@ -1,0 +1,116 @@
+package controlador;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import modelo.PaqueteMultiple;
+import modelo.PaqueteTuristico;
+import modelo.PaqueteUnico;
+import utilitarios.Archivo;
+
+/**
+ * Controlador del modulo de paquetes turisticos.
+ */
+public class PaqueteControlador {
+
+    private static ArrayList<PaqueteTuristico> paquetes = new ArrayList<>();
+
+    public static ArrayList<PaqueteTuristico> getPaquetes() {
+        return paquetes;
+    }
+
+    public static void cargarDesdeArchivo() throws IOException {
+        paquetes.clear();
+        ArrayList<String> lineas = Archivo.leerLineas(Archivo.RUTA_PAQUETES);
+        for (String linea : lineas) {
+            if (linea.trim().isEmpty()) {
+                continue;
+            }
+            try {
+                PaqueteTuristico paquete = PaqueteTuristico.desdeLineaCsv(linea);
+                if (paquete != null) {
+                    paquetes.add(paquete);
+                }
+            } catch (Exception e) {
+                // linea con formato invalido
+            }
+        }
+    }
+
+    public static void guardarEnArchivo() throws IOException {
+        ArrayList<String> lineas = new ArrayList<>();
+        for (PaqueteTuristico paquete : paquetes) {
+            lineas.add(paquete.aLineaCsv());
+        }
+        Archivo.escribirLineas(Archivo.RUTA_PAQUETES, lineas);
+    }
+
+    public static boolean existeCodigo(String codigo) {
+        for (PaqueteTuristico paquete : paquetes) {
+            if (paquete.getCodigo().equalsIgnoreCase(codigo.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String registrar(PaqueteTuristico paquete) {
+        String error = validarPaquete(paquete);
+        if (error != null) {
+            return error;
+        }
+
+        try {
+            cargarDesdeArchivo();
+            if (existeCodigo(paquete.getCodigo())) {
+                return "El codigo del paquete ya existe.";
+            }
+            paquetes.add(paquete);
+            guardarEnArchivo();
+            return null;
+        } catch (IOException e) {
+            return "Error al guardar el archivo: " + e.getMessage();
+        }
+    }
+
+    public static String validarPaquete(PaqueteTuristico paquete) {
+        if (paquete.getCodigo() == null || paquete.getCodigo().trim().isEmpty()) {
+            return "El codigo del paquete es obligatorio.";
+        }
+        if (paquete.getNombre() == null || paquete.getNombre().trim().isEmpty()) {
+            return "El nombre del paquete es obligatorio.";
+        }
+        if (paquete.getTipologia() == null || paquete.getTipologia().trim().isEmpty()) {
+            return "La tipologia es obligatoria.";
+        }
+        if (paquete.getOrigen() == null || paquete.getOrigen().trim().isEmpty()) {
+            return "El origen es obligatorio.";
+        }
+        if (paquete.getTarifaDia() < 0) {
+            return "La tarifa por dia debe ser mayor o igual a 0.";
+        }
+
+        if (paquete instanceof PaqueteUnico) {
+            PaqueteUnico unico = (PaqueteUnico) paquete;
+            if (unico.getDestino() == null || unico.getDestino().trim().isEmpty()) {
+                return "Debe seleccionar un destino.";
+            }
+            if (unico.getOrigen().equalsIgnoreCase(unico.getDestino())) {
+                return "El origen y el destino no pueden ser iguales.";
+            }
+        }
+
+        if (paquete instanceof PaqueteMultiple) {
+            PaqueteMultiple multiple = (PaqueteMultiple) paquete;
+            if (multiple.getDestinos().isEmpty()) {
+                return "Debe agregar al menos un destino.";
+            }
+            for (String destino : multiple.getDestinos()) {
+                if (paquete.getOrigen().equalsIgnoreCase(destino)) {
+                    return "Ningun destino puede ser igual al origen.";
+                }
+            }
+        }
+
+        return null;
+    }
+}

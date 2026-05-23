@@ -4,7 +4,9 @@
  */
 package vista;
 
-import utilitarios.Archivo;
+import controlador.PaqueteControlador;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -180,13 +182,33 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuConsultarVentaActionPerformed
 
     private void menuCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCargarDatosActionPerformed
-        // TODO add your handling code here:
-        Archivo.cargarDatos();
+        try {
+            PaqueteControlador.cargarDesdeArchivo();
+            JOptionPane.showMessageDialog(this,
+                    "Datos cargados correctamente.",
+                    "Informacion",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar datos: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_menuCargarDatosActionPerformed
 
     private void menuGuardarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarDatosActionPerformed
-        // TODO add your handling code here:
-        Archivo.guardarDatos();
+        try {
+            PaqueteControlador.guardarEnArchivo();
+            JOptionPane.showMessageDialog(this,
+                    "Datos guardados correctamente.",
+                    "Informacion",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al guardar datos: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_menuGuardarDatosActionPerformed
 
     /**
