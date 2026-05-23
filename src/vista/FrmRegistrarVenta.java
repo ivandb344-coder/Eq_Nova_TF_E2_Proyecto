@@ -4,17 +4,46 @@
  */
 package vista;
 
+import controlador.ClienteControlador;
+import controlador.PaqueteControlador;
+import controlador.VentaControlador;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import modelo.Cliente;
+import modelo.PaqueteTuristico;
+import modelo.Venta;
+
 /**
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmRegistrarVenta extends javax.swing.JFrame {
 
+    private PaqueteTuristico paqueteSeleccionado;
+
     /**
      * Creates new form FrmRegistrarVenta
      */
     public FrmRegistrarVenta() {
         initComponents();
+        paqueteSeleccionado = null;
+        txtDescripcion.setEditable(false);
+        configurarCalculoTotales();
+        actualizarTotalesEnPantalla();
+    }
+
+    private void configurarCalculoTotales() {
+        FocusAdapter recalcular = new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                actualizarTotalesEnPantalla();
+            }
+        };
+        txtDiasPermanencia.addFocusListener(recalcular);
+        txtUnidades.addFocusListener(recalcular);
+        txtPorcentajeDescuento.addFocusListener(recalcular);
     }
 
     /**
@@ -76,6 +105,8 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
         btnBuscarCliente = new javax.swing.JButton();
+        lbDescuento = new javax.swing.JLabel();
+        lbTotalPagar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -277,6 +308,14 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
             }
         });
 
+        lbDescuento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbDescuento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDescuento.setText("Descuento: ##.##");
+
+        lbTotalPagar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbTotalPagar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbTotalPagar.setText("Total a pagar: ##.##");
+
         javax.swing.GroupLayout REGISTRODEVENTA2Layout = new javax.swing.GroupLayout(REGISTRODEVENTA2);
         REGISTRODEVENTA2.setLayout(REGISTRODEVENTA2Layout);
         REGISTRODEVENTA2Layout.setHorizontalGroup(
@@ -327,14 +366,14 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
                                     .addComponent(txtNombreContacto))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
-                        .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
                                 .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel50)
                                     .addComponent(jLabel49)
-                                    .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel53))
+                                    .addComponent(jLabel53)
+                                    .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(REGISTRODEVENTA2Layout.createSequentialGroup()
@@ -373,7 +412,12 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
                                 .addComponent(txtCodigoPaquete, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnBuscarPaquete))
-                            .addComponent(jLabel47))
+                            .addComponent(jLabel47)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, REGISTRODEVENTA2Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(lbDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(16, 16, 16)
                         .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
@@ -468,10 +512,13 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
                             .addComponent(txtUnidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
-                .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardarVenta)
-                    .addComponent(btnLimpiar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(REGISTRODEVENTA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnGuardarVenta)
+                        .addComponent(btnLimpiar))
+                    .addComponent(lbDescuento)
+                    .addComponent(lbTotalPagar))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -517,20 +564,19 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombrePaquetejTextFieldNombrePaqueteActionPerformed
 
     private void txtDiasPermanenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiasPermanenciaActionPerformed
-        // TODO add your handling code here:
+        actualizarTotalesEnPantalla();
     }//GEN-LAST:event_txtDiasPermanenciaActionPerformed
 
     private void txtUnidadesjTextFieldUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnidadesjTextFieldUnidadesActionPerformed
-
+        actualizarTotalesEnPantalla();
     }//GEN-LAST:event_txtUnidadesjTextFieldUnidadesActionPerformed
 
     private void btnGuardarVentajButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarVentajButtonGuardarVentaActionPerformed
-        
+        guardarVenta();
     }//GEN-LAST:event_btnGuardarVentajButtonGuardarVentaActionPerformed
 
     private void btnLimpiarjButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarjButtonLimpiarActionPerformed
-    
-
+        limpiarFormulario();
     }//GEN-LAST:event_btnLimpiarjButtonLimpiarActionPerformed
 
     private void chHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chHotelActionPerformed
@@ -542,12 +588,236 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_chAlimentaciónActionPerformed
 
     private void btnBuscarPaquetejButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPaquetejButtonLimpiarActionPerformed
-        // TODO add your handling code here:
+        buscarPaquete();
     }//GEN-LAST:event_btnBuscarPaquetejButtonLimpiarActionPerformed
 
     private void btnBuscarClientejButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClientejButtonLimpiarActionPerformed
-        // TODO add your handling code here:
+        buscarCliente();
     }//GEN-LAST:event_btnBuscarClientejButtonLimpiarActionPerformed
+
+    private String obtenerTipoId() {
+        return cbTipoId.getSelectedItem().toString().substring(0, 1);
+    }
+
+    private void buscarCliente() {
+        String tipoId = obtenerTipoId();
+        String numeroId = txtNumeroId.getText().trim();
+
+        if (numeroId.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Ingrese el numero de identificacion.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            Cliente cliente = ClienteControlador.buscar(tipoId, numeroId);
+            if (cliente == null) {
+                JOptionPane.showMessageDialog(this,
+                        "El cliente no existe. Ingrese los datos para registrarlo.",
+                        "Informacion",
+                        JOptionPane.INFORMATION_MESSAGE);
+                txtNombreCliente.setText("");
+                txtEmail.setText("");
+                txtTelefono.setText("");
+                txtNombreContacto.setText("");
+                cbEmpresa.setSelectedIndex(0);
+                return;
+            }
+
+            txtNombreCliente.setText(cliente.getNombre());
+            txtEmail.setText(cliente.getEmail());
+            txtTelefono.setText(cliente.getTelefono());
+            txtNombreContacto.setText(cliente.getNombreContacto());
+            cbEmpresa.setSelectedItem(cliente.getEmpresaTexto());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al buscar el cliente: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void buscarPaquete() {
+        String codigo = txtCodigoPaquete.getText().trim();
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Ingrese el codigo del paquete.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            PaqueteTuristico paquete = PaqueteControlador.buscarActivoPorCodigo(codigo);
+            if (paquete == null) {
+                paqueteSeleccionado = null;
+                limpiarDatosPaquete();
+                JOptionPane.showMessageDialog(this,
+                        "El paquete no existe o no esta activo.",
+                        "Informacion",
+                        JOptionPane.INFORMATION_MESSAGE);
+                actualizarTotalesEnPantalla();
+                return;
+            }
+
+            paqueteSeleccionado = paquete;
+            cargarPaqueteEnFormulario(paquete);
+            actualizarTotalesEnPantalla();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al buscar el paquete: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarPaqueteEnFormulario(PaqueteTuristico paquete) {
+        txtNombrePaquete.setText(paquete.getNombre());
+        txtCategoria.setText(paquete.getCategoriaTexto());
+        txtTipología.setText(paquete.getTipologia());
+        txtOrigen.setText(paquete.getOrigen());
+        txtDestino.setText(paquete.getDestinosTexto());
+        txtTarifaDia.setText(String.valueOf(paquete.getTarifaDia()));
+        txtDescripcion.setText(paquete.getDescripcion());
+        chVuelo.setSelected(paquete.isVuelo());
+        chHotel.setSelected(paquete.isHotel());
+        chAsistenciaMedica.setSelected(paquete.isAsistenciaMedica());
+        chAlimentación.setSelected(paquete.isAlimentacion());
+        chSoloDesayuno.setSelected(paquete.isSoloDesayuno());
+    }
+
+    private void limpiarDatosPaquete() {
+        txtNombrePaquete.setText("");
+        txtCategoria.setText("");
+        txtTipología.setText("");
+        txtOrigen.setText("");
+        txtDestino.setText("");
+        txtTarifaDia.setText("");
+        txtDescripcion.setText("");
+        chVuelo.setSelected(false);
+        chHotel.setSelected(false);
+        chAsistenciaMedica.setSelected(false);
+        chAlimentación.setSelected(false);
+        chSoloDesayuno.setSelected(false);
+    }
+
+    private void actualizarTotalesEnPantalla() {
+        if (paqueteSeleccionado == null) {
+            lbDescuento.setText("Descuento: 0.00");
+            lbTotalPagar.setText("Total a pagar: 0.00");
+            return;
+        }
+
+        try {
+            int dias = Integer.parseInt(txtDiasPermanencia.getText().trim());
+            int unidades = Integer.parseInt(txtUnidades.getText().trim());
+            double porcentajeDescuento = Double.parseDouble(txtPorcentajeDescuento.getText().trim());
+
+            double[] totales = Venta.calcularTotales(
+                    paqueteSeleccionado.getTarifaDia(),
+                    dias,
+                    unidades,
+                    porcentajeDescuento,
+                    paqueteSeleccionado.getPorcentajeRecargo());
+
+            lbDescuento.setText(String.format("Descuento: %.2f", totales[0]));
+            lbTotalPagar.setText(String.format("Total a pagar: %.2f", totales[1]));
+        } catch (NumberFormatException e) {
+            lbDescuento.setText("Descuento: 0.00");
+            lbTotalPagar.setText("Total a pagar: 0.00");
+        }
+    }
+
+    private void guardarVenta() {
+        if (paqueteSeleccionado == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Debe buscar un paquete turistico activo.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Cliente cliente = new Cliente();
+        cliente.setTipoId(obtenerTipoId());
+        cliente.setNumeroId(txtNumeroId.getText().trim());
+        cliente.setNombre(txtNombreCliente.getText().trim());
+        cliente.setEmail(txtEmail.getText().trim());
+        cliente.setTelefono(txtTelefono.getText().trim());
+        cliente.setNombreContacto(txtNombreContacto.getText().trim());
+        cliente.setEmpresa(cbEmpresa.getSelectedItem().toString().equalsIgnoreCase("SI"));
+
+        int dias;
+        int unidades;
+        double porcentajeDescuento;
+        try {
+            dias = Integer.parseInt(txtDiasPermanencia.getText().trim());
+            unidades = Integer.parseInt(txtUnidades.getText().trim());
+            porcentajeDescuento = Double.parseDouble(txtPorcentajeDescuento.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Dias, unidades y descuento deben ser numericos.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        double[] totales = Venta.calcularTotales(
+                paqueteSeleccionado.getTarifaDia(),
+                dias,
+                unidades,
+                porcentajeDescuento,
+                paqueteSeleccionado.getPorcentajeRecargo());
+
+        Venta venta = new Venta();
+        venta.setTipoId(cliente.getTipoId());
+        venta.setNumeroId(cliente.getNumeroId());
+        venta.setNombreCliente(cliente.getNombre());
+        venta.setCodigoPaquete(paqueteSeleccionado.getCodigo());
+        venta.setNombrePaquete(paqueteSeleccionado.getNombre());
+        venta.setOrigen(paqueteSeleccionado.getOrigen());
+        venta.setDestino(paqueteSeleccionado.getDestinosTexto());
+        venta.setTarifaDia(paqueteSeleccionado.getTarifaDia());
+        venta.setDiasPermanencia(dias);
+        venta.setUnidades(unidades);
+        venta.setPorcentajeDescuento(porcentajeDescuento);
+        venta.setMontoDescuento(totales[0]);
+        venta.setTotal(totales[1]);
+
+        String error = VentaControlador.registrar(venta, cliente);
+        if (error != null) {
+            JOptionPane.showMessageDialog(this,
+                    error,
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this,
+                "Venta registrada correctamente. Codigo: " + venta.getCodigoVenta(),
+                "Informacion",
+                JOptionPane.INFORMATION_MESSAGE);
+        limpiarFormulario();
+    }
+
+    private void limpiarFormulario() {
+        cbTipoId.setSelectedIndex(0);
+        txtNumeroId.setText("");
+        txtNombreCliente.setText("");
+        txtEmail.setText("");
+        txtTelefono.setText("");
+        txtNombreContacto.setText("");
+        txtPorcentajeDescuento.setText("");
+        cbEmpresa.setSelectedIndex(0);
+        txtCodigoPaquete.setText("");
+        paqueteSeleccionado = null;
+        limpiarDatosPaquete();
+        txtDiasPermanencia.setText("");
+        txtUnidades.setText("");
+        lbDescuento.setText("Descuento: 0.00");
+        lbTotalPagar.setText("Total a pagar: 0.00");
+    }
 
     /**
      * @param args the command line arguments
@@ -619,6 +889,8 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel lbDescuento;
+    private javax.swing.JLabel lbTotalPagar;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigoPaquete;
     private javax.swing.JTextArea txtDescripcion;

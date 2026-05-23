@@ -16,6 +16,8 @@ import java.util.ArrayList;
 public class Archivo {
 
     public static final String RUTA_PAQUETES = "datos" + File.separator + "paquetes.csv";
+    public static final String RUTA_CLIENTES = "datos" + File.separator + "clientes.csv";
+    public static final String RUTA_VENTAS = "datos" + File.separator + "ventas.csv";
 
     public static ArrayList<String> leerLineas(String ruta) throws IOException {
         ArrayList<String> lineas = new ArrayList<>();

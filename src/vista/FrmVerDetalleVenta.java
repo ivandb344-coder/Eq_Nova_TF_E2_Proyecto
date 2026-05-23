@@ -4,6 +4,12 @@
  */
 package vista;
 
+import controlador.VentaControlador;
+import java.awt.Font;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import modelo.Venta;
+
 /**
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
@@ -15,6 +21,25 @@ public class FrmVerDetalleVenta extends javax.swing.JFrame {
      */
     public FrmVerDetalleVenta() {
         initComponents();
+        configurarAreaBoleta();
+    }
+
+    public FrmVerDetalleVenta(Venta venta) {
+        initComponents();
+        configurarAreaBoleta();
+        try {
+            jTextArea1.setText(VentaControlador.obtenerTextoBoleta(venta));
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al generar la boleta: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void configurarAreaBoleta() {
+        jTextArea1.setEditable(false);
+        jTextArea1.setFont(new Font("Monospaced", Font.PLAIN, 12));
     }
 
     /**
@@ -35,7 +60,7 @@ public class FrmVerDetalleVenta extends javax.swing.JFrame {
 
         jLabel47.setBackground(new java.awt.Color(204, 204, 204));
         jLabel47.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel47.setText("DETALLE DE VENTA");
+        jLabel47.setText("BOLETA DE VENTA");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);

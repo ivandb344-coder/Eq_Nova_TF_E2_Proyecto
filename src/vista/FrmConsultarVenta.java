@@ -4,17 +4,30 @@
  */
 package vista;
 
+import controlador.VentaControlador;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Venta;
+
 /**
  *
  * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmConsultarVenta extends javax.swing.JFrame {
 
+    private DefaultTableModel modeloTabla;
+
     /**
      * Creates new form FrmConsultarPaquete
      */
     public FrmConsultarVenta() {
         initComponents();
+        modeloTabla = (DefaultTableModel) tablaVenta.getModel();
+        cargarTabla();
     }
 
     /**
@@ -190,15 +203,22 @@ public class FrmConsultarVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevojButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevojButtonGuardarVentaActionPerformed
-
+        FrmRegistrarVenta frmRegistrar = new FrmRegistrarVenta();
+        frmRegistrar.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                cargarTabla();
+            }
+        });
+        frmRegistrar.setVisible(true);
     }//GEN-LAST:event_btnNuevojButtonGuardarVentaActionPerformed
 
     private void btnCancelarVentajButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVentajButtonGuardarVentaActionPerformed
-        // TODO add your handling code here:
+        cancelarVentaSeleccionada();
     }//GEN-LAST:event_btnCancelarVentajButtonGuardarVentaActionPerformed
 
     private void btnVerDetallejButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallejButtonGuardarVentaActionPerformed
-        // TODO add your handling code here:
+        verDetalleVenta();
     }//GEN-LAST:event_btnVerDetallejButtonGuardarVentaActionPerformed
 
     private void cbEstadojComboBoxTipoIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbEstadojComboBoxTipoIDMouseClicked
@@ -214,8 +234,102 @@ public class FrmConsultarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNumeroVentajTextFieldNumeroIDActionPerformed
 
     private void btnBuscarjButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarjButtonGuardarVentaActionPerformed
-        // TODO add your handling code here:
+        cargarTabla();
     }//GEN-LAST:event_btnBuscarjButtonGuardarVentaActionPerformed
+
+    private void cargarTabla() {
+        modeloTabla.setRowCount(0);
+        try {
+            boolean activo = cbEstado.getSelectedItem().toString().equals("ACTIVO");
+            String codigoVenta = txtNumeroVenta.getText().trim();
+            ArrayList<Venta> lista = VentaControlador.buscarPorFiltro(activo, codigoVenta);
+
+            for (Venta venta : lista) {
+                modeloTabla.addRow(new Object[]{
+                    venta.getCodigoVenta(),
+                    venta.getNombreCliente(),
+                    venta.getNombrePaquete(),
+                    venta.getOrigen(),
+                    venta.getDestino(),
+                    venta.getTarifaDia(),
+                    venta.getUnidades(),
+                    venta.getDiasPermanencia(),
+                    String.format("%.2f", venta.getTotal())
+                });
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar las ventas: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cancelarVentaSeleccionada() {
+        int fila = tablaVenta.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione una venta de la tabla.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String codigoVenta = modeloTabla.getValueAt(fila, 0).toString();
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "Desea cancelar la venta " + codigoVenta + "?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        String error = VentaControlador.cancelarVenta(codigoVenta);
+        if (error != null) {
+            JOptionPane.showMessageDialog(this,
+                    error,
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this,
+                "Venta cancelada correctamente.",
+                "Informacion",
+                JOptionPane.INFORMATION_MESSAGE);
+        cargarTabla();
+    }
+
+    private void verDetalleVenta() {
+        int fila = tablaVenta.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione una venta de la tabla.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String codigoVenta = modeloTabla.getValueAt(fila, 0).toString();
+        try {
+            Venta venta = VentaControlador.buscarPorCodigo(codigoVenta);
+            if (venta == null) {
+                JOptionPane.showMessageDialog(this,
+                        "No se encontro la venta.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            FrmVerDetalleVenta frmDetalle = new FrmVerDetalleVenta(venta);
+            frmDetalle.setVisible(true);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al consultar la venta: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * @param args the command line arguments

@@ -4,7 +4,9 @@
  */
 package vista;
 
+import controlador.ClienteControlador;
 import controlador.PaqueteControlador;
+import controlador.VentaControlador;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
@@ -46,7 +48,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuCargarDatos = new javax.swing.JMenuItem();
         menuGuardarDatos = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lbLogged.setBackground(new java.awt.Color(0, 102, 102));
         lbLogged.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -184,6 +186,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void menuCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCargarDatosActionPerformed
         try {
             PaqueteControlador.cargarDesdeArchivo();
+            ClienteControlador.cargarDesdeArchivo();
+            VentaControlador.cargarDesdeArchivo();
             JOptionPane.showMessageDialog(this,
                     "Datos cargados correctamente.",
                     "Informacion",
@@ -199,6 +203,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void menuGuardarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarDatosActionPerformed
         try {
             PaqueteControlador.guardarEnArchivo();
+            ClienteControlador.guardarEnArchivo();
+            VentaControlador.guardarEnArchivo();
             JOptionPane.showMessageDialog(this,
                     "Datos guardados correctamente.",
                     "Informacion",

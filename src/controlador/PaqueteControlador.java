@@ -83,6 +83,20 @@ public class PaqueteControlador {
         return null;
     }
 
+    public static PaqueteTuristico buscarActivoPorCodigo(String codigo) throws IOException {
+        cargarDesdeArchivo();
+        PaqueteTuristico paquete = buscarPorCodigo(codigo);
+        if (paquete != null && paquete.isActivo()) {
+            return paquete;
+        }
+        return null;
+    }
+
+    public static PaqueteTuristico buscarPorCodigoDesdeArchivo(String codigo) throws IOException {
+        cargarDesdeArchivo();
+        return buscarPorCodigo(codigo);
+    }
+
     public static ArrayList<PaqueteTuristico> listarActivos() throws IOException {
         cargarDesdeArchivo();
         ArrayList<PaqueteTuristico> activos = new ArrayList<>();
