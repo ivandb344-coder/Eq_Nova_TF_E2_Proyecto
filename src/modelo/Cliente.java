@@ -101,4 +101,55 @@ public class Cliente {
     public String getEmpresaTexto() {
         return empresa ? "SI" : "NO";
     }
+
+    // Valida numero de ID segun tipo: C=6 digitos, N=9 digitos
+    public static String validarNumeroId(String tipoId, String numeroId) {
+        if (numeroId == null || numeroId.trim().isEmpty()) {
+            return "El numero de identificacion es obligatorio.";
+        }
+        String numero = numeroId.trim();
+        if (tipoId.equalsIgnoreCase("C")) {
+            if (!numero.matches("\\d{6}")) {
+                return "La cedula debe tener 6 digitos.";
+            }
+        } else if (tipoId.equalsIgnoreCase("N")) {
+            if (!numero.matches("\\d{9}")) {
+                return "El NIT debe tener 9 digitos.";
+            }
+        }
+        return null;
+    }
+
+    public static boolean esTextoSoloLetras(String texto) {
+        return texto != null && texto.trim().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$");
+    }
+
+    public static boolean esEmailValido(String email) {
+        return email != null && email.trim().matches("^.+@.+\\..+$");
+    }
+
+    public static boolean esTelefonoValido(String telefono) {
+        return telefono != null && telefono.trim().matches("\\d{10}");
+    }
+
+    // Valida formato de campos del cliente
+    public static String validarFormato(Cliente cliente) {
+        String errorNumero = validarNumeroId(cliente.getTipoId(), cliente.getNumeroId());
+        if (errorNumero != null) {
+            return errorNumero;
+        }
+        if (!esTextoSoloLetras(cliente.getNombre())) {
+            return "El nombre del cliente solo permite letras y espacios.";
+        }
+        if (!esTextoSoloLetras(cliente.getNombreContacto())) {
+            return "El nombre de contacto solo permite letras y espacios.";
+        }
+        if (!esEmailValido(cliente.getEmail())) {
+            return "El email debe tener formato correo@dominio.com";
+        }
+        if (!esTelefonoValido(cliente.getTelefono())) {
+            return "El telefono debe tener 10 digitos.";
+        }
+        return null;
+    }
 }

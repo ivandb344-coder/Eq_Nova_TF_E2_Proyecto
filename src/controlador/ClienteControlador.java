@@ -102,6 +102,6 @@ public class ClienteControlador {
         if (cliente.getNombreContacto() == null || cliente.getNombreContacto().trim().isEmpty()) {
             return "El nombre de contacto es obligatorio.";
         }
-        return null;
+        return Cliente.validarFormato(cliente);
     }
 }

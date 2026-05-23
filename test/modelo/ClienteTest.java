@@ -41,4 +41,38 @@ public class ClienteTest {
         assertTrue(cargado.isEmpresa());
         assertEquals("SI", cargado.getEmpresaTexto());
     }
+
+    @Test
+    public void validarNumeroIdCedulaYNit() {
+        assertEquals("La cedula debe tener 6 digitos.",
+                Cliente.validarNumeroId("C", "12345"));
+        assertNull(Cliente.validarNumeroId("C", "123456"));
+        assertEquals("El NIT debe tener 9 digitos.",
+                Cliente.validarNumeroId("N", "12345678"));
+        assertNull(Cliente.validarNumeroId("N", "123456789"));
+    }
+
+    @Test
+    public void validarFormatoCliente() {
+        Cliente cliente = new Cliente();
+        cliente.setTipoId("C");
+        cliente.setNumeroId("123456");
+        cliente.setNombre("Juan Perez");
+        cliente.setNombreContacto("Maria Lopez");
+        cliente.setEmail("juan@mail.com");
+        cliente.setTelefono("3001234567");
+
+        assertNull(Cliente.validarFormato(cliente));
+
+        cliente.setNombre("Juan123");
+        assertNotNull(Cliente.validarFormato(cliente));
+
+        cliente.setNombre("Juan Perez");
+        cliente.setEmail("correo-invalido");
+        assertNotNull(Cliente.validarFormato(cliente));
+
+        cliente.setEmail("juan@mail.com");
+        cliente.setTelefono("123");
+        assertNotNull(Cliente.validarFormato(cliente));
+    }
 }
