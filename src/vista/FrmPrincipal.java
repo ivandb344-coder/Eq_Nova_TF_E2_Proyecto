@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author elden
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
@@ -46,7 +46,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuCargarDatos = new javax.swing.JMenuItem();
         menuGuardarDatos = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lbLogged.setBackground(new java.awt.Color(0, 102, 102));
         lbLogged.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N

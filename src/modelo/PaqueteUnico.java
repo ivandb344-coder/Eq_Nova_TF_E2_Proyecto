@@ -2,6 +2,8 @@ package modelo;
 
 /**
  * Paquete con un solo destino.
+ *
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class PaqueteUnico extends PaqueteTuristico {
 

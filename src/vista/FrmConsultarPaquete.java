@@ -4,17 +4,30 @@
  */
 package vista;
 
+import controlador.PaqueteControlador;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.PaqueteTuristico;
+
 /**
  *
- * @author elden
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmConsultarPaquete extends javax.swing.JFrame {
+
+    private DefaultTableModel modeloTabla;
 
     /**
      * Creates new form FrmConsultarPaquete
      */
     public FrmConsultarPaquete() {
         initComponents();
+        modeloTabla = (DefaultTableModel) tablaPaquetes.getModel();
+        cargarTabla();
     }
 
     /**
@@ -33,7 +46,7 @@ public class FrmConsultarPaquete extends javax.swing.JFrame {
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(940, 300));
 
         jLabel47.setBackground(new java.awt.Color(204, 204, 204));
@@ -124,12 +137,83 @@ public class FrmConsultarPaquete extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevojButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevojButtonGuardarVentaActionPerformed
-
+        FrmRegistrarPaquete frmRegistrar = new FrmRegistrarPaquete();
+        frmRegistrar.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                cargarTabla();
+            }
+        });
+        frmRegistrar.setVisible(true);
     }//GEN-LAST:event_btnNuevojButtonGuardarVentaActionPerformed
 
     private void btnEliminarjButtonGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarjButtonGuardarVentaActionPerformed
-        // TODO add your handling code here:
+        eliminarPaquete();
     }//GEN-LAST:event_btnEliminarjButtonGuardarVentaActionPerformed
+
+    private void cargarTabla() {
+        modeloTabla.setRowCount(0);
+        try {
+            ArrayList<PaqueteTuristico> activos = PaqueteControlador.listarActivos();
+            for (PaqueteTuristico paquete : activos) {
+                modeloTabla.addRow(new Object[]{
+                    paquete.getCodigo(),
+                    paquete.getCategoriaTexto(),
+                    paquete.getNombre(),
+                    paquete.getOrigen(),
+                    paquete.getDestinosTexto(),
+                    paquete.getTarifaDia(),
+                    paquete.getTipologia(),
+                    paquete.getServicioTexto(paquete.isVuelo()),
+                    paquete.getServicioTexto(paquete.isHotel()),
+                    paquete.getServicioTexto(paquete.isAsistenciaMedica()),
+                    paquete.getServicioTexto(paquete.isAlimentacion()),
+                    paquete.getServicioTexto(paquete.isSoloDesayuno())
+                });
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar los paquetes: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void eliminarPaquete() {
+        int fila = tablaPaquetes.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione un paquete de la tabla.",
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String codigo = modeloTabla.getValueAt(fila, 0).toString();
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "Desea eliminar el paquete " + codigo + "?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        String error = PaqueteControlador.eliminarLogico(codigo);
+        if (error != null) {
+            JOptionPane.showMessageDialog(this,
+                    error,
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this,
+                "Paquete eliminado correctamente.",
+                "Informacion",
+                JOptionPane.INFORMATION_MESSAGE);
+        cargarTabla();
+    }
 
     /**
      * @param args the command line arguments

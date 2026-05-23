@@ -9,6 +9,8 @@ import utilitarios.Archivo;
 
 /**
  * Controlador del modulo de paquetes turisticos.
+ *
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class PaqueteControlador {
 
@@ -69,6 +71,44 @@ public class PaqueteControlador {
             return null;
         } catch (IOException e) {
             return "Error al guardar el archivo: " + e.getMessage();
+        }
+    }
+
+    public static PaqueteTuristico buscarPorCodigo(String codigo) {
+        for (PaqueteTuristico paquete : paquetes) {
+            if (paquete.getCodigo().equalsIgnoreCase(codigo.trim())) {
+                return paquete;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<PaqueteTuristico> listarActivos() throws IOException {
+        cargarDesdeArchivo();
+        ArrayList<PaqueteTuristico> activos = new ArrayList<>();
+        for (PaqueteTuristico paquete : paquetes) {
+            if (paquete.isActivo()) {
+                activos.add(paquete);
+            }
+        }
+        return activos;
+    }
+
+    public static String eliminarLogico(String codigo) {
+        try {
+            cargarDesdeArchivo();
+            PaqueteTuristico paquete = buscarPorCodigo(codigo);
+            if (paquete == null) {
+                return "No se encontro el paquete seleccionado.";
+            }
+            if (!paquete.isActivo()) {
+                return "El paquete ya esta inactivo.";
+            }
+            paquete.setActivo(false);
+            guardarEnArchivo();
+            return null;
+        } catch (IOException e) {
+            return "Error al eliminar el paquete: " + e.getMessage();
         }
     }
 

@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  * Paquete con varios destinos. Recargo del 1% en la venta.
+ *
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class PaqueteMultiple extends PaqueteTuristico {
 

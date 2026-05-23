@@ -6,7 +6,7 @@ package vista;
 
 /**
  *
- * @author elden
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmRegistrarVenta extends javax.swing.JFrame {
 
@@ -77,7 +77,7 @@ public class FrmRegistrarVenta extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextArea();
         btnBuscarCliente = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         REGISTRODEVENTA2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

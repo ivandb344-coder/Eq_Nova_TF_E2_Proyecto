@@ -2,6 +2,8 @@ package modelo;
 
 /**
  * Clase base de un paquete turistico.
+ *
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public abstract class PaqueteTuristico {
 
@@ -29,6 +31,18 @@ public abstract class PaqueteTuristico {
     // Recargo en venta: 0 unico, 1% multiple
     public double getPorcentajeRecargo() {
         return 0;
+    }
+
+    public String getCategoriaTexto() {
+        return esMultiple() ? "Múltiple" : "Único";
+    }
+
+    public String getDestinosTexto() {
+        return getDestinosCsv().replace("|", ", ");
+    }
+
+    public String getServicioTexto(boolean valor) {
+        return valor ? "Si" : "No";
     }
 
     public String aLineaCsv() {

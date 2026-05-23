@@ -13,7 +13,7 @@ import modelo.PaqueteUnico;
 
 /**
  *
- * @author elden
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class FrmRegistrarPaquete extends javax.swing.JFrame {
 
@@ -68,7 +68,7 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDestinosSeleccionados = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         REGISTRODEVENTA2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         REGISTRODEVENTA2.setPreferredSize(new java.awt.Dimension(940, 290));
@@ -514,9 +514,9 @@ public class FrmRegistrarPaquete extends javax.swing.JFrame {
         txtTarifaDia.setText("");
         cbOrigen.setSelectedIndex(0);
         cbDestino.setSelectedIndex(0);
-        chVuelo.setSelected(false);
-        chHotel.setSelected(false);
-        chAsistenciaMedica.setSelected(false);
+        chVuelo.setSelected(true);
+        chHotel.setSelected(true);
+        chAsistenciaMedica.setSelected(true);
         chAlimentación.setSelected(false);
         chSoloDesayuno.setSelected(false);
         txtDescripcion.setText("");

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 /**
  * Utilidad para lectura y escritura de archivos CSV.
+ *
+ * @author Carlos Duran, Ivan David Bejarano Diaz, Zuri Saday Messu, Michael Steven Reyes
  */
 public class Archivo {
 
